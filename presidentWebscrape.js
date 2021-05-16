@@ -7,14 +7,16 @@ async function getUSPresidents() {
     const { data } = await axios.get(url)
     const $ = cheerio.load(data)
     const table = $('.wikitable:contains("President")')
+    const presidents = []
     table.find('tbody tr').each((i, element) => {
-        
         const $element = $(element)
-        const state ={}
-        state.name =$element.find('td b a').text()
-        fixedState = state.filter(Boolean)
-        console.log(fixedState)
+        const president = {}
+        president.name =$element.find('td b a').text()
+        president.birthday =$element.find('td b a').text()
+        if (president.name) {presidents.push(president)}
+        
     })
+    console.log(presidents)
 }
 
 getUSPresidents()
